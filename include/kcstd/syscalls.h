@@ -1,5 +1,5 @@
-#ifndef SYSCALLS_H
-#define SYSCALLS_H
+#ifndef __SYSCALLS_H__
+#define __SYSCALLS_H__
 
 #include "kcstd/types.h"
 
