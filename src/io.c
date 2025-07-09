@@ -18,6 +18,6 @@ size_t read(int fd, const void* dest, size_t count) {
   return __ASM_READ__(fd, dest, count);
 }
 
-void exit(long exit_code) {
-  __ASM_EXIT__(exit_code);
+void exit(int exit_code) {
+  __ASM_EXIT__((long)exit_code);
 }
