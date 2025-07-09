@@ -67,11 +67,3 @@ int main() {
 
   return 0;
 }
-
-void _start() {
-  // used for inicialize pool memory
-  // im not using it now.
-  // memoryp_init();
-  int result = main();
-  exit(result);
-}
