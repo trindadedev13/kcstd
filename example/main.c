@@ -6,7 +6,13 @@ struct people {
   string name;
 };
 
-int main() {
+int main(int argc, string argv[]) {
+
+  printf("argc: %d\n", argc);
+  for (int i = 0; i < argc; ++i) {
+    printf("argv:%d:%s\n", i, argv[i]);
+  }
+
   struct people* me = memory_alloc(sizeof(struct people));
   if (me == null) {
     printf("Failed to allocate memory for 'struct people me'\n");

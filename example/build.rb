@@ -31,5 +31,5 @@ FileUtils.cp("build/main", "#{HOME}/temp/kcstd_example/main")
 
 Dir.chdir("#{HOME}/temp/kcstd_example") do
   run("chmod +x main")
-  run("./main")
+  run("./main a b c")
 end
