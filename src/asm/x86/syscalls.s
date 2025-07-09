@@ -6,6 +6,7 @@
     .global __ASM_CLOSE__
     .global __ASM_NMAP__
     .global __ASM_MUNMAP__
+    .global __ASM_CLOCK_GETTIME__
 
 # void __ASM_WRITE__(int fd, const void *buf, size_t len)
 __ASM_WRITE__:
@@ -78,4 +79,12 @@ __ASM_MUNMAP__:
     int    $0x80
 
     pop    %ebp
+    ret
+
+# int64_t __ASM_CLOCK_GETTIME__(clockid_t clock_id, time_spec* ts)
+__ASM_CLOCK_GETTIME__:
+    mov    $265, %eax     # syscall clock_gettime
+    mov    4(%esp), %ebx
+    mov    8(%esp), %ecx
+    int    $0x80
     ret

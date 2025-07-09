@@ -6,44 +6,51 @@
     .global __ASM_CLOSE__
     .global __ASM_NMAP__
     .global __ASM_MUNMAP__
+    .global __ASM_CLOCK_GETTIME__
 
 // void __ASM_WRITE__(int fd, const void* buffer, size_t len)
 __ASM_WRITE__:
-    mov     r7, #4         // syscall write
-    svc     0              // system call
-    bx      lr             // returns to caller
+    mov    r7, #4         // syscall write
+    svc    #0              // system call
+    bx     lr             // returns to caller
 
 // void __ASM_EXIT__(int status)
 __ASM_EXIT__:
-    mov     r7, #1         // syscall exit
-    svc     0              // ends the process
+    mov    r7, #1         // syscall exit
+    svc    #0              // ends the process
 
 // int __ASM_OPENAT__(int dirfd, const char* filename, int flags, int mode)
 __ASM_OPENAT__:
     mov    r7, #56  // openat syscall
-    svc    0
+    svc    #0
     bx     lr
 
 // size_t __ASM_READ__(int fd, void* dest, size_t count)
 __ASM_READ__:
-    mov    r8, #63  // read syscall
-    svc    0
+    mov    r7, #63  // read syscall
+    svc    #0
     bx     lr
 
 // void __ASM_CLOSE__(int fd)
 __ASM_CLOSE__:
     mov    r7, #57  // close syscall
-    svc    0
+    svc    #0
     bx     lr
 
 // void* __ASM_NMAP__(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 __ASM_NMAP__:
     mov    r7, #192
-    svc    0
+    svc    #0
     bx     lr
 
 // void __ASM_MUNMAP__(void* ptr, size_t size)
 __ASM_MUNMAP__:
-    mov   r7, #91     // syscall munmap
-    svc   0
-    bx    lr
+    mov    r7, #91     // syscall munmap
+    svc    #0
+    bx     lr
+
+// int64_t __ASM_CLOCK_GETTIME__(clockid_t clock_id, time_spec* ts)
+__ASM_CLOCK_GETTIME__:
+    mov    r7, #263    // syscall clock_gettime
+    svc    #0
+    bx     lr

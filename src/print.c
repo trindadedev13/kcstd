@@ -41,7 +41,7 @@ void print_int(int n) {
 void printf(string fmtr, ...) {
   string fmt = fmtr;
   va_list ap;
-  va_start(ap, fmt);
+  va_start(ap, fmtr);
   while (*fmt) {
     if (*fmt == '%') {
       fmt++;

@@ -1,5 +1,6 @@
 #include <kcstd/io.h>
 #include <kcstd/memory.h>
+#include <kcstd/time.h>
 #include <kcstd/types.h>
 
 struct people {
@@ -69,6 +70,18 @@ int main(int argc, string argv[]) {
   string dest = memory_alloc(128);
   file_read(rtxt, dest, 128);
   printf("File content: %s\n");
+
+  time_spec ts;
+  clock_get_time(CLOCK_REALTIME, &ts);
+  start_rand(ts.sec);
+  int64_t rand_1 = rand();
+  printf("1st Rand: %d\n", rand_1);
+  printf("1st Time: %d\n", ts.sec);
+
+  start_rand(time(null));
+  int64_t rand_2 = rand();
+  printf("2nd Rand: %d\n", rand_2);
+  printf("2nd Time: %d\n", time(null));
 
   return 0;
 }
