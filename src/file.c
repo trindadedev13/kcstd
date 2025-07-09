@@ -44,7 +44,8 @@ size_t file_read(const file* file, const void* dest, size_t count) {
 }
 
 void file_close(file* fl) {
-  if (fl == null) return;
+  if (fl == null)
+    return;
   if (fl->fd >= 0) {
     __ASM_CLOSE__(fl->fd);
     fl->fd = -1;

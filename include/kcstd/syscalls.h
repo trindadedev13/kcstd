@@ -13,7 +13,12 @@ extern int __ASM_OPENAT__(int dirfd, const char* filename, int flags, int mode);
 
 extern void __ASM_CLOSE__(int fd);
 
-extern void* __ASM_NMAP__(void *addr, size_t size, int prot, int flags, int fd, size_t offset);
+extern void* __ASM_NMAP__(void* addr,
+                          size_t size,
+                          int prot,
+                          int flags,
+                          int fd,
+                          size_t offset);
 
 extern void __ASM_MUNMAP__(void* ptr, size_t size);
 
