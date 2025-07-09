@@ -27,6 +27,22 @@ file* file_open(string filename, file_open_mode mode) {
   return fl;
 }
 
+size_t file_write(const file* file, const void* buf, size_t len) {
+  if (file == null || file->fd < 0 || buf == null)
+    return 0;
+
+  size_t bytes = write(file->fd, buf, len);
+  return bytes < 0 ? 0 : (size_t)bytes;
+}
+
+size_t file_read(const file* file, const void* dest, size_t count) {
+  if (file == null || file->fd < 0 || dest == null)
+    return 0;
+
+  size_t bytes = read(file->fd, dest, count);
+  return bytes < 0 ? 0 : (size_t)bytes;
+}
+
 void file_close(file* fl) {
   if (fl == null) return;
   if (fl->fd >= 0) {

@@ -11,6 +11,13 @@
 #define putchar(c) put_char(c)
 #define puts(s) put_string(s)
 
+// IO::FILE
+#define FILE file
+#define fopen(str, mode) file_open(str, mode)
+#define fread(ptr, size, count, file) file_read(file, ptr, (size) * (count))
+#define fwrite(ptr, size, count, file) file_write(file, ptr, (size) * (count))
+#define fclose(ptr) file_close(ptr)
+
 // Memory
 #define malloc(size) memory_alloc(size)
 #define realloc(ptr, new_size) memory_realloc(ptr, new_size)
@@ -24,7 +31,7 @@
 #define strcmp(a, b) str_cmp(a, b)
 #define strncmp(a, b, lmt) str_cmp_lmt(a, b, lmt)
 #define strcat(src, new) str_cat(src, new)
-#define strcpy(src, dest) str_copy(src, dest)
-#define strncpy(src, dest, lmt) str_copy_lmt(src, dest, lmt)
+#define strcpy(dest, src) str_copy(dest, dest)
+#define strncpy(dest, src, lmt) str_copy_lmt(dest, src, lmt)
 
 #endif

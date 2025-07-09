@@ -4,11 +4,11 @@
 #include "kcstd/va_args.h"
 
 size_t put_char(char c) {
-  return write(stdout, &c, 1);
+  return file_write(stdout, &c, 1);
 }
 
 size_t put_str(string s) {
-  return write(stdout, s, str_len(s));
+  return file_write(stdout, s, str_len(s));
 }
 
 void print_int(int n) {

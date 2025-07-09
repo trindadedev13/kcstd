@@ -58,7 +58,7 @@ int main(int argc, string argv[]) {
     printf("Failed to open main.txt.\n");
     return 1;
   }
-  write(txt, "hi", str_len("hi"));
+  file_write(txt, "hi", str_len("hi"));
   file_close(txt);
 
   // read 128 bytes in main.txt
@@ -68,7 +68,7 @@ int main(int argc, string argv[]) {
     return 1;
   }
   string dest = memory_alloc(128);
-  read(rtxt, dest, 128);
+  file_read(rtxt, dest, 128);
   printf("File content: %s\n");
 
   return 0;

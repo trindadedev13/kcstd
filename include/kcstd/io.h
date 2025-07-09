@@ -28,8 +28,8 @@ typedef char file_open_mode;
 #define O_TRUNC   01000   // 0x200
 
 // Writes a content(buffer) to a file
-size_t write(const file* f, const void* buf, size_t len);
-size_t read(const file* f, const void* dest, size_t count);
+size_t write(int fd, const void* buf, size_t len);
+size_t read(int fd, const void* dest, size_t count);
 
 // Finishes the program
 void exit(long exit_code);
@@ -46,6 +46,8 @@ void printf(const string fmt, ...);
 
 // File
 file* file_open(string filename, file_open_mode mode);
-void file_close(file* fl);
+size_t  file_write(const file* f, const void* buf, size_t len);
+size_t  file_read(const file* f, const void* dest, size_t count);
+void    file_close(file* fl);
 
 #endif
