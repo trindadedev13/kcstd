@@ -22,16 +22,25 @@ def install()
     header_filename = header.split("/").last
     out_dir = "#{prefix}/include/kcstd/#{header_filename}"
     puts "-- Installing #{out_dir}"
-    FileUtils.cp_r(header, out_dir)
+    FileUtils.cp(header, out_dir)
   end
 end
 
+def should_compile?(src, temp)
+  content = File.read(src)
+  if File.exist?(temp)
+    return false if File.read(temp) == content
+  end
+  File.write(temp, content)
+  true
+end
+
 arch = case RbConfig::CONFIG['host_cpu']
-  when "x86"     then :x86
-  when "x86_64"  then :x86_64
-  when "aarch64" then :aarch64
-  when "i686"    then :arm
-  else           :unknown
+  when "x86", "i386", "i686" then :x86
+  when "x86_64", "amd64"     then :x86_64
+  when "aarch64"             then :aarch64
+  when "arm", "armv7l"       then :arm
+  else                       :unknown
 end
 
 if arch == :unknown
@@ -44,8 +53,9 @@ puts "-- Building in #{arch}"
 asmbuild_args = [
   "-nostdlib",
   "-nodefaultlibs",
-  "-c -fPIC"
-].join(" ")
+  "-c",
+  "-fPIC"
+]
 
 cbuild_args = [
   "-std=c99",
@@ -55,7 +65,7 @@ cbuild_args = [
   "-ffreestanding",
   "-static",
   "-Iinclude/"
-].join(" ")
+]
 
 install_arg = false
 
@@ -68,6 +78,14 @@ if ARGV.length >= 1
         install_arg = true
       when "-c", "--clean"
         FileUtils.remove_dir("build")
+      when "-x32", "--x86"
+        arch = :x86
+        cbuild_args.push("-m32")
+        asmbuild_args.push("-m32")
+      when "-x64", "--x86_64"
+        arch = :x86_64
+        cbuild_args.push("-m64")
+        asmbuild_args.push("-m64")
     end
   end
 end
@@ -80,21 +98,11 @@ Dir.glob("src/asm/#{arch}/*.s").each do |file|
   temp_file = "build/#{File.basename(file, '.s')}_temp.s"
 
   # Skip file if last build file content is equal current
-  it_content = File.read(file)
-  if File.exist?(temp_file)
-    temp_file_content = File.read(temp_file)
-    if temp_file_content == it_content
-      next
-    else
-      File.write(temp_file, it_content)
-    end
-  else
-    File.write(temp_file, it_content)
-  end
+  next unless should_compile?(file, temp_file)
 
   # Compile
   puts "-- Compiling #{file}..."
-  run("gcc #{asmbuild_args} -c #{file} -o #{obj}")
+  run("gcc #{asmbuild_args.join(' ')} -c #{file} -o #{obj}")
 end
 
 # Compile All C Sources
@@ -103,27 +111,16 @@ Dir.glob("src/*.c").each do |file|
   temp_file = "build/#{File.basename(file, '.c')}_temp.c"
 
   # Skip file if last build file content is equal current
-  it_content = File.read(file)
-  if File.exist?(temp_file)
-    temp_file_content = File.read(temp_file)
-    if temp_file_content == it_content
-      next
-    else
-      File.write(temp_file, it_content)
-    end
-  else
-    File.write(temp_file, it_content)
-  end
+  next unless should_compile?(file, temp_file)
 
   # Compile
   puts "-- Compiling #{file}..."
-  run("gcc #{cbuild_args} -c #{file} -o #{obj}")
+  run("gcc #{cbuild_args.join(' ')} -c #{file} -o #{obj}")
 end
+
+objects = Dir.glob("build/*.o").join(" ")
+ run("ar rcs build/libkcstd.a #{objects}")
 
 puts "-- Compiled successfully!"
 
-if install_arg
-  objects = Dir.glob("build/*.o").join(" ")
-  run("ar rcs build/libkcstd.a #{objects}")
-  install()
-end
+install() if install_arg
