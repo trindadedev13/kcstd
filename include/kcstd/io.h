@@ -32,7 +32,7 @@ size_t write(int fd, const void* buf, size_t len);
 size_t read(int fd, const void* dest, size_t count);
 
 // Finishes the program
-void exit(long exit_code);
+void exit(int exit_code);
 
 // Writes a char in stdout.
 size_t put_char(char c);
