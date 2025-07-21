@@ -33,4 +33,8 @@ string str_copy_lmt(string dest, string src, size_t lmt);
 // Returns a allocated string
 string str_dup(const string src);
 
+string str_substring(const string str, size_t start, size_t end);
+
+bool str_starts_with(string str, string start_with, size_t offset);
+
 #endif

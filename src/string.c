@@ -81,3 +81,25 @@ string str_dup(const string src) {
     return null;
   return memory_copy(new, src, len);
 }
+
+string str_substring(const string str, size_t start, size_t end) {
+  if (!str || start > end || end > str_len(str)) {
+    return null;
+  }
+
+  size_t len = end - start;
+  string result = memory_alloc(len + 1);
+  if (!result)
+    return NULL;
+
+  memory_copy(result, str + start, len);
+  result[len] = '\0';
+  return result;
+}
+
+bool str_starts_with(string str, string start_with, size_t offset) {
+  if (str_cmp_lmt(str + offset, start_with, str_len(start_with)) == 0) {
+    return true;
+  }
+  return false;
+}
