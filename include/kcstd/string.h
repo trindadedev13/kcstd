@@ -29,4 +29,8 @@ string str_copy(string dest, string src);
 // Copies just 'lmt' bytes of string src to dest
 string str_copy_lmt(string dest, string src, size_t lmt);
 
+// Duplicates a string
+// Returns a allocated string
+string str_dup(const string src);
+
 #endif

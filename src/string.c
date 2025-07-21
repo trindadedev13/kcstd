@@ -1,5 +1,6 @@
 #include "kcstd/string.h"
 
+#include "kcstd/memory.h"
 #include "kcstd/types.h"
 
 size_t str_len(const string str) {
@@ -71,4 +72,12 @@ string str_copy_lmt(string dest, string src, size_t lmt) {
     i++;
   }
   return dest;
+}
+
+string str_dup(const string src) {
+  size_t len = str_len(src) + 1;
+  void* new = memory_alloc(len);
+  if (new == null)
+    return null;
+  return memory_copy(new, src, len);
 }

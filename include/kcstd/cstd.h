@@ -33,5 +33,11 @@
 #define strcat(src, new) str_cat(src, new)
 #define strcpy(dest, src) str_copy(dest, dest)
 #define strncpy(dest, src, lmt) str_copy_lmt(dest, src, lmt)
+#define strdup(src) str_dup(src)
+
+// Char
+#define isspace(c) is_space(c)
+#define isdigit(c) is_digit(c)
+#define isalpha(c) is_alpha
 
 #endif
