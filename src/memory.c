@@ -5,7 +5,7 @@
 
 void* memory_alloc(size_t size) {
   void* real_ptr =
-      __ASM_NMAP__(null, size + sizeof(memory_block_header),
+      __ASM_MMAP__(null, size + sizeof(memory_block_header),
                    PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
   memory_block_header* header = (memory_block_header*)real_ptr;
   header->size = size;

@@ -25,16 +25,22 @@ typedef void* buffer;
 
 #if defined(__x86_64__) || defined(_M_X64)
 typedef unsigned long size_t;
+typedef long ssize_t;
 #elif defined(__i386__) || defined(_M_IX86)
 typedef unsigned int size_t;
+typedef int ssize_t;
 #elif defined(__aarch64__) || defined(_M_ARM64)
 typedef unsigned long size_t;
+typedef long ssize_t;
 #elif defined(__arm__) || defined(_M_ARM)
 typedef unsigned int size_t;
+typedef int ssize_t;
 #elif defined(__riscv) && __riscv_xlen == 64
 typedef unsigned long size_t;
+typedef long ssize_t;
 #elif defined(__riscv) && __riscv_xlen == 32
 typedef unsigned int size_t;
+typedef int ssize_t;
 #else
 #error "invalid arch."
 #endif

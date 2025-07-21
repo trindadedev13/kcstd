@@ -67,9 +67,9 @@ int main(int argc, string argv[]) {
     printf("Failed to open main.txt.\n");
     return 1;
   }
-  string dest = memory_alloc(128);
-  file_read(rtxt, dest, 128);
-  printf("File content: %s\n");
+  string dest = memory_alloc(1024);
+  file_read(rtxt, dest, 1024);
+  printf("File content: %s\n", dest);
 
   time_spec ts;
   clock_get_time(CLOCK_REALTIME, &ts);

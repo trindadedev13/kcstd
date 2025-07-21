@@ -4,9 +4,10 @@
     .global __ASM_OPENAT__
     .global __ASM_READ__
     .global __ASM_CLOSE__
-    .global __ASM_NMAP__
+    .global __ASM_MMAP__
     .global __ASM_MUNMAP__
     .global __ASM_CLOCK_GETTIME__
+    .global __ASM_LSEEK__
 
 // void __ASM_WRITE__(int fd, const void* buffer, size_t len)
 __ASM_WRITE__:
@@ -37,8 +38,8 @@ __ASM_CLOSE__:
     svc    #0
     bx     lr
 
-// void* __ASM_NMAP__(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
-__ASM_NMAP__:
+// void* __ASM_MMAP__(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+__ASM_MMAP__:
     mov    r7, #192
     svc    #0
     bx     lr
@@ -52,5 +53,11 @@ __ASM_MUNMAP__:
 // int64_t __ASM_CLOCK_GETTIME__(clockid_t clock_id, time_spec* ts)
 __ASM_CLOCK_GETTIME__:
     mov    r7, #263    // syscall clock_gettime
+    svc    #0
+    bx     lr
+
+// long __ASM_LSEEK__(int fd, int offset, int whence);
+__ASM_LSEEK__:
+    mov    r7, #19
     svc    #0
     bx     lr

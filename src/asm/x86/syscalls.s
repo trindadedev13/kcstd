@@ -4,9 +4,10 @@
     .global __ASM_OPENAT__
     .global __ASM_READ__
     .global __ASM_CLOSE__
-    .global __ASM_NMAP__
+    .global __ASM_MMAP__
     .global __ASM_MUNMAP__
     .global __ASM_CLOCK_GETTIME__
+    .global __ASM_LSEEK__
 
 # void __ASM_WRITE__(int fd, const void *buf, size_t len)
 __ASM_WRITE__:
@@ -50,8 +51,8 @@ __ASM_CLOSE__:
     int     $0x80
     ret
 
-# void* __ASM_NMAP__(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
-__ASM_NMAP__:
+# void* __ASM_MMAP__(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
+__ASM_MMAP__:
     push   %ebp
     mov    %esp, %ebp
 
@@ -87,4 +88,15 @@ __ASM_CLOCK_GETTIME__:
     mov    4(%esp), %ebx
     mov    8(%esp), %ecx
     int    $0x80
+    ret
+    
+    
+# long __ASM_LSEEK__(int fd, int offset, int whence);
+__ASM_LSEEK__:
+    mov    $19, %eax         # syscall number lseek
+    mov    4(%esp), %ebx     # fd
+    mov    8(%esp), %ecx     # offset low 32 bits
+    mov    12(%esp), %edx    # offset high 32 bits
+    mov    16(%esp), %esi    # whence
+    int    $0x80             # kernel syscall
     ret
