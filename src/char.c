@@ -17,3 +17,7 @@ bool is_alpha(char c) {
 int to_lower(char c) {
   return c | 32;
 }
+
+bool is_hex_digit(char ch) {
+  return is_digit(ch) || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F');
+}
