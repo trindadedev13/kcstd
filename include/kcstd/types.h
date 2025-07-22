@@ -13,6 +13,7 @@ typedef long long int64_t;
 
 typedef unsigned char byte;
 typedef unsigned char bool;
+
 #define true 1
 #define false 0
 
