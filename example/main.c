@@ -31,7 +31,7 @@ int main(int argc, string argv[]) {
   string cc = "gcc";
   size_t tt = str_len(cc) + 1;
   string cp = memory_alloc(tt);
-  str_copy_lmt(cp, cc, 2);
+  str_copy_ofs(cp, cc, 2);
 
   printf("%s\n", cp);
 
